@@ -1,0 +1,16 @@
+basic:
+  host: localhost
+  port: 23456
+tapas:
+  tapasfile: /cygdrive/c/data/sumo-data/tapas.out
+  host: vm0.jfk.cloud
+  port: 2222 
+  slippery_probability: 0.5
+  slippery_bootstrap: true
+  output_format: json
+gis_db:
+  host: 172.18.43.189
+  port: 27017
+  osmfile: /cygdrive/c/Users/eforjul/Downloads/TAPASCologne-0.17.0/TAPASCologne-0.17.0/cologne_bbox.osm.xml
+  tapasfile: /cygdrive/c/data/sumo-data/tapas.out
+
