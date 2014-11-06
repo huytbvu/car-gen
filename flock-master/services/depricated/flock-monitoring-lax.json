@@ -1,0 +1,25 @@
+{
+"serviceDescription": {
+  "container": {
+    "image": "docker://docker.cloud:5000/flock_utils/flock_monitoring",
+    "options": ["-n=false", "--privileged",
+                "--env=DISCOVERY=etcd_host:vm1.lax.cloud,datacenter:lax",
+                "--lxc-conf=lxc.network.type = veth",
+                "--lxc-conf=lxc.network.link = br0",
+                "--lxc-conf=lxc.network.name = eth0",
+                "--lxc-conf=lxc.network.flags = up",
+                "--volume=/etc/timezone:/etc/timezone",
+                "--volume=/mnt/models:/mnt/models"]
+  },
+  "id": "flock-monitoring-lax",
+  "instances": "1",
+  "constraints": [["hostname", "UNIQUE"]],
+  "cpus": "1",
+  "mem": "4096",
+  "uris": [ ],
+  "cmd": "dhclient eth0; ifconfig eth0; /home/ericsson/configure.sh; cat /home/ericsson/streamer.cfg; service ssh start; dpkg-reconfigure --frontend noninteractive tzdata; cd /home/ericsson && ./run-spark-app.sh; while [ 1 ]; do sleep 5; done"
+  },
+"datacenterConstraint": {"id": "lax"},
+"slaDescription": {"policy": "switchproxy"}
+}
+

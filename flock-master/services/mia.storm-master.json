@@ -1,0 +1,21 @@
+{
+  "container": {
+    "image": "docker://docker.cloud:5000/flock_workloads/storm_master",
+    "options": ["-n=false", 
+                "--privileged",
+                "--env=DISCOVERY=etcd_host:vm1.mia.cloud,service_id:mia/storm-master",
+                "--lxc-conf=lxc.network.type = veth",
+                "--lxc-conf=lxc.network.link = br0",
+                "--lxc-conf=lxc.network.name = eth0",
+                "--lxc-conf=lxc.network.flags = up"]
+  },
+  "id": "mia/storm-master",
+  "instances": "1",
+  "globalConstraint": {"datacenterId": "mia"},
+  "localConstraint": [["hostname", "UNIQUE"]],
+  "slaDescription": {"policy": "switchproxy"},
+  "serviceOptions": {"hostname" : "dummy"},
+  "cpus": ".5",
+  "mem": "4096",
+  "cmd": "dhclient eth0; ifconfig eth0; service zookeeper start; service ssh start; register_service.py; start_storm_nimbus.sh; start_storm_ui.sh; while [ 1 ]; do sleep 5; done"
+}

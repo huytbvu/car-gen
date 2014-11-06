@@ -1,7 +1,7 @@
 FROM ubuntu
 ADD bin ~/cdg/
 ADD car_data_generator ~/cdg/
-ADD cnf ~/cdg/
+ADD conf ~/cdg/
 ADD bin/car_data_generator /usr/bin/
 EXPOSE 4040
 RUN export PATH=$PATH:~/cdg/bin

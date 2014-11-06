@@ -1,0 +1,64 @@
+-----------------
+flock-master v0.1
+-----------------
+
+Flock is a cross-datacenter resource manager and service orchestrator.
+
+Directory structure:
+--------------------
+
+/config -> Configuration files
+/testing -> Script to lunch flock-master locally
+/services -> Example service templates
+/src -> Source directory
+
+Install dependencies:
+----------------------
+
+Install the jetcd library:
+
+$ cd dependency/jetcd; mvn install -DskipTests
+
+Install the etcd daemon:
+
+Download and install your favourite etcd version from https://github.com/coreos/etcd/releases
+
+Build and run locally:
+----------------------
+
+Configure flock-master:
+
+$ vi config/flock-master.yaml
+
+Point to the right etcd server.
+Define your datacenters.
+
+From the flock-master root directory execute:
+
+$ mvn package
+$ ./testing/flock-master-local.sh
+
+API examples:
+-------------
+
+Start service:
+
+$ curl -X POST -H "Content-Type: application/json" -d@sample.json http://localhost:2121/v1/api/services | python -m json.tool
+
+List service:
+
+$ curl -X GET http://localhost:2121/v1/api/services | python -m json.tool
+
+Stop service:
+
+$ curl -X DELETE http://localhost:2121/v1/api/services/{namespace}/{serviceId} | python -m json.tool
+
+Register callback:
+
+Supported callback types: slaViolation, stopService. For example:
+
+$ curl -X POST -H "Content-Type: application/json" -d'{"serviceId":"namespace/serviceId","callbackUri":"http://...","callbackType":"slaViolation"}' http://localhost:2121/v1/api/callbacks | python -m json.tool
+
+Delete callback:
+
+$ curl -X DELETE http://localhost:2121/v1/api/callbacks/{namespace}/{serviceId}/{callbackType} | python -m json.tool

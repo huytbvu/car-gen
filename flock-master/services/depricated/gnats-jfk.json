@@ -1,0 +1,21 @@
+{
+"serviceDescription": {
+  "container": {
+    "image": "docker://docker.cloud:5000/flock_utils/gnats",
+    "options": ["-n=false", "--privileged",
+                "--env=DISCOVERY=etcd_host:vm1.jfk.cloud,service:gnats,username:nats,password:T0pS3cr3t,client_port:4222,http_port:8222",
+                "--lxc-conf=lxc.network.type = veth",
+                "--lxc-conf=lxc.network.link = br0",
+                "--lxc-conf=lxc.network.name = eth0",
+                "--lxc-conf=lxc.network.flags = up"]
+  },
+  "id": "gnats-jfk",
+  "instances": "1",
+  "cpus": ".2",
+  "mem": "1024",
+  "uris": [ ],
+  "cmd": "dhclient eth0; ifconfig eth0; service ssh start; register_service.py; cd /home/ericsson/; ./gnatsd -c gnatsd.conf; while [ 1 ]; do sleep 5; done"
+  },
+"datacenterConstraint": {"id": "jfk"}
+}
+

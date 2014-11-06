@@ -1,0 +1,5 @@
+external/
+.project
+.classpath
+.settings
+/target
